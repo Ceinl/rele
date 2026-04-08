@@ -1,26 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,200..800;1,9..40,200..800&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-void: #08080a;
+  --color-abyss: #0e0e12;
+  --color-surface: #141418;
+  --color-elevated: #1c1c22;
+  --color-card: #222229;
+  --color-border: #2a2a33;
+  --color-border-light: #35353f;
+  --color-muted: #6e6b64;
+  --color-ash: #989490;
+  --color-chalk: #e8e6e3;
+  --color-parchment: #f5f0e8;
+  --color-amber: #d4952a;
+  --color-amber-light: #e8b04a;
+  --color-amber-muted: #7a5820;
+  --color-ember: #c45a3a;
+  --color-ember-light: #e07050;
+  --color-sage: #7c9a72;
+  --color-sage-muted: #4a6344;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 3px;
+}
+
+::selection {
+  background-color: var(--color-amber-muted);
+  color: var(--color-parchment);
+}
+
+html {
+  background-color: var(--color-void);
+  color: var(--color-chalk);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  background-color: var(--color-void);
+  color: var(--color-chalk);
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) }
+  10% { transform: translate(-5%, -10%) }
+  30% { transform: translate(3%, -15%) }
+  50% { transform: translate(-15%, 5%) }
+  70% { transform: translate(8%, 10%) }
+  90% { transform: translate(-10%, 2%) }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out both;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 0.3s ease-out both;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out both;
+}
+
+.grain-overlay::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.3;
+}
+
+.glow-amber {
+  box-shadow: 0 0 30px -5px rgba(212, 149, 42, 0.15),
+              0 0 60px -10px rgba(212, 149, 42, 0.08);
+}
+
+.input-field {
+  @apply w-full rounded-lg border border-border bg-surface px-4 py-3 text-chalk placeholder-muted transition-all duration-200 focus:border-amber focus:outline-none focus:ring-1 focus:ring-amber/30;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-lg bg-amber px-5 py-2.5 font-medium text-void transition-all duration-200 hover:bg-amber-light active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-lg border border-border bg-elevated px-5 py-2.5 font-medium text-chalk transition-all duration-200 hover:border-border-light hover:bg-card active:scale-[0.98];
+}
+
+.btn-danger {
+  @apply inline-flex items-center justify-center rounded-lg border border-ember/30 bg-ember/10 px-5 py-2.5 font-medium text-ember-light transition-all duration-200 hover:border-ember/50 hover:bg-ember/20 active:scale-[0.98];
+}
+
+.card-base {
+  @apply rounded-xl border border-border bg-surface transition-all duration-200;
 }
