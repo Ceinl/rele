@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Markdown from "@/components/Markdown";
 
 interface FlipCardProps {
   question: string;
@@ -58,9 +59,9 @@ export default function FlipCard({ question, answer, index }: FlipCardProps) {
           <div className="absolute top-3 right-4 sm:top-4 sm:right-5 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-sage">
             Answer
           </div>
-          <p className="text-sm sm:text-base md:text-lg leading-relaxed text-chalk text-center max-w-lg px-2">
-            {answer}
-          </p>
+          <div className="prose-content-card overflow-y-auto max-h-full text-sm sm:text-base md:text-lg px-2 text-center max-w-lg">
+            <Markdown content={answer} />
+          </div>
           <div className="absolute bottom-3 sm:bottom-5 text-[9px] sm:text-xs tracking-wider text-muted/60 uppercase">
             Tap to see question
           </div>

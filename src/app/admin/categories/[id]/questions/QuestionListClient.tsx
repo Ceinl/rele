@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Plus, Pencil, Trash2, Check } from "lucide-react";
+import Markdown from "@/components/Markdown";
 
 interface Question {
   id: number;
@@ -71,13 +72,13 @@ export default function QuestionListClient({
 
           <div>
             <label className="mb-1.5 block text-sm font-medium text-ash">
-              Long Answer <span className="text-muted text-xs">(shown in Learn mode, optional)</span>
+              Long Answer <span className="text-muted text-xs">(shown in Learn mode, optional, supports **markdown**)</span>
             </label>
             <textarea
               name="longAnswer"
               rows={3}
               className="input-field resize-none"
-              placeholder="Detailed explanation for study mode. If empty, short answer is used."
+              placeholder="Detailed explanation for study mode. Supports **bold**, `code`, lists. If empty, short answer is used."
             />
           </div>
 
@@ -144,7 +145,7 @@ export default function QuestionListClient({
                             Long Answer
                           </span>
                           <p className="mt-0.5 text-sm text-muted leading-relaxed">
-                            {q.longAnswer}
+                            <Markdown content={q.longAnswer} />
                           </p>
                         </div>
                       )}
@@ -211,7 +212,7 @@ function EditForm({
       </div>
       <div>
         <label className="mb-1 block text-xs text-muted">
-          Long Answer <span className="text-muted/60">(optional, for Learn mode)</span>
+          Long Answer <span className="text-muted/60">(optional, for Learn mode, supports **markdown**)</span>
         </label>
         <textarea
           name="longAnswer"

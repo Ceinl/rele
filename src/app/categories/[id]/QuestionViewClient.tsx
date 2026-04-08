@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import FlipCard from "@/components/FlipCard";
+import Markdown from "@/components/Markdown";
 import { ArrowLeft, ArrowRight, Layers, BookOpen, Menu, X } from "lucide-react";
 import Link from "next/link";
 
@@ -258,9 +259,7 @@ export default function CardsView({
                   Answer
                 </span>
               </div>
-              <p className="text-base sm:text-lg leading-relaxed text-chalk">
-                {displayAnswer}
-              </p>
+              <Markdown content={displayAnswer} />
             </div>
 
             <div className="flex items-center justify-between w-full mt-10 sm:mt-12">
