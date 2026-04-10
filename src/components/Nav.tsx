@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, LayoutDashboard, LogOut, Library, Menu, X } from "lucide-react";
+import { BookOpen, LogOut, Library, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -12,15 +12,6 @@ export default function Nav({ role, name }: { role: string; name: string }) {
 
   const links = [
     { href: "/categories", label: "Categories", icon: Library },
-    ...(role === "admin"
-      ? [
-          {
-            href: "/admin/categories",
-            label: "Manage",
-            icon: LayoutDashboard,
-          },
-        ]
-      : []),
   ];
 
   return (

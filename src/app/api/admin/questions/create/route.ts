@@ -11,22 +11,18 @@ export async function POST(request: NextRequest) {
   const userId = Number(formData.get("userId"));
 
   if (!question?.trim() || !answer?.trim()) {
-    return NextResponse.redirect(
-      new URL(`/admin/categories/${categoryId}/questions`, request.url)
-    );
+    return NextResponse.json({ error: "Question and answer are required" }, { status: 400 });
   }
 
   const db = getDb();
-  await db.insert(schema.questions).values({
+  const result = await db.insert(schema.questions).values({
     categoryId,
     question: question.trim(),
     answer: answer.trim(),
     longAnswer: longAnswer?.trim() || null,
     createdBy: userId,
-  });
+  }).returning();
 
-  revalidatePath(`/admin/categories/${categoryId}/questions`);
-  return NextResponse.redirect(
-    new URL(`/admin/categories/${categoryId}/questions`, request.url)
-  );
+  revalidatePath(`/categories/${categoryId}`);
+  return NextResponse.json({ success: true, question: result[0] });
 }

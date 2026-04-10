@@ -12,9 +12,7 @@ export async function POST(request: NextRequest) {
   const longAnswer = formData.get("longAnswer") as string | null;
 
   if (!question?.trim() || !answer?.trim()) {
-    return NextResponse.redirect(
-      new URL(`/admin/categories/${categoryId}/questions`, request.url)
-    );
+    return NextResponse.json({ error: "Question and answer are required" }, { status: 400 });
   }
 
   const db = getDb();
@@ -27,8 +25,6 @@ export async function POST(request: NextRequest) {
     })
     .where(eq(schema.questions.id, id));
 
-  revalidatePath(`/admin/categories/${categoryId}/questions`);
-  return NextResponse.redirect(
-    new URL(`/admin/categories/${categoryId}/questions`, request.url)
-  );
+  revalidatePath(`/categories/${categoryId}`);
+  return NextResponse.json({ success: true });
 }

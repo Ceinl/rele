@@ -41,7 +41,13 @@ export default async function QuestionsPage({
   return (
     <>
       <Nav role={session.role} name={user?.name || "User"} />
-      <QuestionViewClient category={category} questions={serializedQuestions} />
+      <QuestionViewClient
+        category={category}
+        questions={serializedQuestions}
+        categoryId={categoryId}
+        userId={session.userId}
+        isAdmin={session.role === "admin"}
+      />
     </>
   );
 }

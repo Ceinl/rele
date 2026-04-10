@@ -11,8 +11,6 @@ export async function POST(request: NextRequest) {
   const db = getDb();
   await db.delete(schema.questions).where(eq(schema.questions.id, id));
 
-  revalidatePath(`/admin/categories/${categoryId}/questions`);
-  return NextResponse.redirect(
-    new URL(`/admin/categories/${categoryId}/questions`, request.url)
-  );
+  revalidatePath(`/categories/${categoryId}`);
+  return NextResponse.json({ success: true });
 }
